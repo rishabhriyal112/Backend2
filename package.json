@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend-nodejs",
+  "keywords": [
+    "javascript",
+    "backend",
+    "express"
+  ],
+  "homepage": "https://github.com/rishabhriyal112/Backend2#readme",
+  "bugs": {
+    "url": "https://github.com/rishabhriyal112/Backend2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishabhriyal112/Backend2.git"
+  },
+  "license": "ISC",
+  "author": "Rishabh Riyal",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
