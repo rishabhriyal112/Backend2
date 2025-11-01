@@ -41,7 +41,7 @@ const userSchema = new Schema(
             type : String,
             required : [true , 'Password is Required']
         },
-        refereshToken : {
+        refreshToken : {
             type : String
         }
     },{timestamps : true} // createdAt and updatedAt
@@ -53,7 +53,7 @@ userSchema.pre("save" , async function(next){
     if(!this.isModified("password")) return next(); 
     
     //Also using .hash keyword we will encrypt our password and If the pasword is created or modified then encrypt it before saving
-    this.password = bcrypt.hash(this.password , 10);
+    this.password = await bcrypt.hash(this.password , 10);
     next(); 
 })
 

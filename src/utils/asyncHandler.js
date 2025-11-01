@@ -1,3 +1,7 @@
+/*
+asyncHandler is a function used in Express.js to automatically catch errors from asynchronous route handlers (those using async/await) and pass them to the Express error-handling middleware, so you don’t need to write try...catch in every route.
+ */
+
 const asyncHandler = (requestHandler)=>{
     return (req , res , next) =>{
         Promise.resolve(requestHandler(req , res , next)).catch((err)=>next(err))
@@ -5,8 +9,6 @@ const asyncHandler = (requestHandler)=>{
 }
 
 export {asyncHandler};
-
-
 
 
 
