@@ -17,7 +17,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // 1. Get User details
     const { fullName, email, username, password } = req.body;
-    console.log("email : ", email);
+    console.log("Request body:", req.body);
+    console.log("fullName:", fullName, "email:", email, "username:", username);
 
     // 2. Validation like if any of the fields shouldn't be empty
     // This line checks if any of the input fields (fullName, email, username, password) are empty or just spaces.
@@ -27,7 +28,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // 3.Check if User is already exists so that they didnt register twice
-    const existedUser = User.findOne({ //User.findOne() → is a Mongoose method used to find a single document (record) in the DB
+    const existedUser = await User.findOne({ //User.findOne() → is a Mongoose method used to find a single document (record) in the DB
         $or: [{ username }, { email }] //$or is a MongoDB query operator meaning “find a user where either the username or the email matches”
     })
 
@@ -40,8 +41,14 @@ const registerUser = asyncHandler(async (req, res) => {
     //safely extracts the local file path of the uploaded avatar and  coverImage from the request object.
     // It uses optional chaining (?.) to prevent errors if the avatar , coverImage or file data doesn’t exist.
     // In short, it gets the path where the uploaded avatar or coverImage is temporarily stored on the server.
-    const avatarLocalPath = req.body?.avatar[0]?.path;
-    const coverImageLocalPath = req.body?.coverImage[0]?.path;
+    const avatarLocalPath = req.files?.avatar[0]?.path;
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    //Also instead of this above coverImageLocalPath code for coverImage if we dont pass any coverImage it will give you errors so for that we have to write conditional statement like this :
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0 ){
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
+
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required")
